@@ -6,11 +6,11 @@ import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
+interface RegisterScreenProps extends AppStackScreenProps<"Register"> {}
 
-export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
+export const RegisterScreen: FC<RegisterScreenProps> = observer(function RegisterScreen(_props) {
   const authPasswordInput = useRef<TextInput>()
-  const { navigation } = _props
+
   const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -50,10 +50,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     setAuthToken(String(Date.now()))
   }
 
-  function goSignUp() {
-    navigation.navigate("Register");
- 
-  }
   const PasswordRightAccessory = useMemo(
     () =>
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
@@ -95,7 +91,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         onSubmitEditing={() => authPasswordInput.current?.focus()}
       />
 
-      <TextField
+      {/* <TextField
         ref={authPasswordInput}
         value={authPassword}
         onChangeText={setAuthPassword}
@@ -108,7 +104,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         placeholderTx="loginScreen.passwordFieldPlaceholder"
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
-      />
+      /> */}
 
       <Button
         testID="login-button"
@@ -116,13 +112,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         style={$tapButton}
         preset="reversed"
         onPress={login}
-      />
-       <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="reversed"
-        onPress={goSignUp}
       />
     </Screen>
   )
