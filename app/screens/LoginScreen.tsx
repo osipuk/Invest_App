@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
 import { Image, View, TextInput, TextStyle, ViewStyle } from "react-native"
 import {
+  Toggle,
   Button, 
   Icon, 
   Screen, 
@@ -21,10 +22,15 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const { navigation } = _props
 
   const refAuthPasswordInput = useRef<TextInput>()
+
   const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
+
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isMemoPassword, setIsMemoPassword] = useState(0)
+
   const [attemptsCount, setAttemptsCount] = useState(0)
+
   const {
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
@@ -69,6 +75,10 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   }
 
+  const onChangeSetMemoPassword = (value) => {
+
+  }
+
   const PasswordRightAccessory = useMemo(
     () =>
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
@@ -103,6 +113,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         style={$removeIcon}
         onPress={removeSignInWindow}
       />
+
       <View style={$content}>
         <Text testID="signup-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
 
@@ -133,6 +144,15 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
           placeholderTx="signupScreen.passwordFieldPlaceholder"
           onSubmitEditing={login}
           RightAccessory={PasswordRightAccessory}
+        />
+
+        <Toggle
+          variant="checkbox"
+          value={isMemoPassword}
+          onValueChange={onChangeSetMemoPassword}
+          labelTx="loginScreen.rememberMe"
+          labelStyle={{ color: "#1D1E1D" }}
+          containerStyle={{ backgroundColor: "#fff" }}
         />
 
         <Button
@@ -182,7 +202,7 @@ const $textField: ViewStyle = {
 }
 
 const $tapButton: ViewStyle = {
-  marginTop: spacing.xs,
+  marginTop: spacing.lg,
   marginBottom: spacing.xl,
   backgroundColor: '#1D1E1D',
   borderRadius: 30,
