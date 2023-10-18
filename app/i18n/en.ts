@@ -30,6 +30,17 @@ const en = {
   errors: {
     invalidEmail: "Invalid email address.",
   },
+  signupScreen: {
+    signUp: "SIGN UP",
+    enterDetails:
+      "Enter your details below to unlock top secret info to signup for this investment app.",
+    emailFieldLabel: "Email",
+    passwordFieldLabel: "Password",
+    emailFieldPlaceholder: "Enter your email address",
+    passwordFieldPlaceholder: "Enter your password",
+    tapToSignUp: "CREATE ACCOUNT",
+    hint: "Hint: you can use any email address and your favorite password :)",
+  },
   loginScreen: {
     signIn: "Sign In",
     enterDetails:
@@ -46,6 +57,7 @@ const en = {
     debugTab: "Debug",
     communityTab: "Community",
     podcastListTab: "Podcast",
+    signupTab: "SignUp"
   },
   demoCommunityScreen: {
     title: "Connect with the community",
