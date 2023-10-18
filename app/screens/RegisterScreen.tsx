@@ -170,7 +170,9 @@ const $signUp: TextStyle = {
   marginBottom: spacing.xl,
   marginTop: spacing.xl,
   color: '#1D1E1D',
-  textAlign: 'center'
+  textAlign: 'center',
+  fontSize: 25,
+  fontWeight: 'bold',
 }
 
 const $enterDetails: TextStyle = {
@@ -188,8 +190,9 @@ const $textField: ViewStyle = {
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
+  paddingVertical: 10,
   backgroundColor: '#1D1E1D',
-  borderRadius: 30,
+  borderRadius: 18,
   minHeight: 30
 }
 
