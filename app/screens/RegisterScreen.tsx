@@ -75,13 +75,10 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
     // navigation.navigate("Welcome");
   }
 
-<<<<<<< HEAD
   const goToSignIn = () => {
     navigation.navigate("Login")
   }
 
-=======
->>>>>>> 5bc1c7f58f320d6e27b515da444b554606cc3b76
   const PasswordRightAccessory = useMemo(
     () =>
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
@@ -157,11 +154,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
         />
 
         <Text style={$addionText}>
-<<<<<<< HEAD
           Already have an account? <Text style={$spanInAddText} onPress={goToSignIn}>Sign In</Text>
-=======
-          Already have an account? <Text style={$spanInAddText}>Sign In</Text>
->>>>>>> 5bc1c7f58f320d6e27b515da444b554606cc3b76
         </Text>
       </View>
     </Screen>
