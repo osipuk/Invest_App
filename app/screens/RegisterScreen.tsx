@@ -8,9 +8,11 @@ import {
   ViewStyle,
   StyleSheet 
 } from "react-native"
+import FontIcon from 'react-native-vector-icons/FontAwesome'
+
 import { 
-  Button, 
   Icon,
+  Button, 
   ListItem, 
   Screen, 
   Text,
@@ -19,11 +21,14 @@ import {
 } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
+
 import { colors, spacing } from "../theme"
 
-interface RegisterScreenProps extends AppStackScreenProps<"Register"> {}
+interface RegisterScreenProps extends AppStackScreenProps<"Welcome"> {}
 
 export const RegisterScreen: FC<RegisterScreenProps> = observer(function RegisterScreen(_props) {
+  const { navigation } = _props
+
   const refPasswordInput = useRef<TextInput>()
   // Here is the part of registering password
   const [regPassword, setRegPassword] = useState("")
@@ -50,7 +55,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
 
   const error = isSubmitted ? validationError : ""
 
-  function signup() {
+  const signup = () => {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
 
@@ -64,6 +69,14 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
 
     // We'll mock this with a fake token.
     setAuthToken(String(Date.now()))
+  }
+
+  const removeSignupWindow = () => {
+    // navigation.navigate("Welcome");
+  }
+
+  const goToSignIn = () => {
+    navigation.navigate("Login")
   }
 
   const PasswordRightAccessory = useMemo(
@@ -92,6 +105,13 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
       <Image
         source={require('../../assets/images/logo_white.png')}
         style={$logo}
+      />
+      <FontIcon 
+        name="remove"
+        size={26}
+        color="white"
+        style={$removeIcon}
+        onPress={removeSignupWindow}
       />
       <View style={$content}>
         <Text testID="signup-heading" tx="signupScreen.signUp" preset="heading" style={$signUp} />
@@ -132,6 +152,10 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
           preset="reversed"
           onPress={signup}
         />
+
+        <Text style={$addionText}>
+          Already have an account? <Text style={$spanInAddText} onPress={goToSignIn}>Sign In</Text>
+        </Text>
       </View>
     </Screen>
   )
@@ -143,7 +167,7 @@ const $screenContentContainer: ViewStyle = {
 }
 
 const $signUp: TextStyle = {
-  marginBottom: spacing.sm,
+  marginBottom: spacing.xl,
   marginTop: spacing.xl,
   color: '#1D1E1D',
   textAlign: 'center'
@@ -165,6 +189,8 @@ const $textField: ViewStyle = {
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
   backgroundColor: '#1D1E1D',
+  borderRadius: 30,
+  minHeight: 30
 }
 
 const $content: ViewStyle = {
@@ -184,4 +210,18 @@ const $logo: ViewStyle = {
   marginTop: -15,
 }
 
+const $removeIcon: ViewStyle = {
+  position: 'absolute',
+  top: 28,
+  right: 20,
+}
+
+const $addionText: ViewStyle = {
+  paddingVertical: spacing.lg,
+}
+
+const $spanInAddText: ViewStyle = {
+  color: '#85D094',
+  fontWeight: 'bold',
+}
 // @demo remove-file
