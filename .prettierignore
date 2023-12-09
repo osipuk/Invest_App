@@ -4,4 +4,3 @@ android
 .vscode
 ignite/ignite.json
 package.json
-yarn.lock

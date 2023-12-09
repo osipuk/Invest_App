@@ -1,39 +1,18 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { 
-  Image,
-  TextInput, 
-  TextStyle,
-  View, 
-  ViewStyle,
-  StyleSheet 
-} from "react-native"
-import FontIcon from 'react-native-vector-icons/FontAwesome'
-
-import { 
-  Icon,
-  Button, 
-  ListItem, 
-  Screen, 
-  Text,
-  TextField,
-  TextFieldAccessoryProps
-} from "../components"
+import { TextInput, TextStyle, ViewStyle } from "react-native"
+import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
-
 import { colors, spacing } from "../theme"
 
-interface RegisterScreenProps extends AppStackScreenProps<"Welcome"> {}
+interface RegisterScreenProps extends AppStackScreenProps<"Register"> {}
 
 export const RegisterScreen: FC<RegisterScreenProps> = observer(function RegisterScreen(_props) {
-  const { navigation } = _props
+  const authPasswordInput = useRef<TextInput>()
 
-  const refPasswordInput = useRef<TextInput>()
-  // Here is the part of registering password
-  const [regPassword, setRegPassword] = useState("")
-
-  const [isRegPasswordHidden, setIsRegPasswordHidden] = useState(true)
+  const [authPassword, setAuthPassword] = useState("")
+  const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [attemptsCount, setAttemptsCount] = useState(0)
   const {
@@ -44,18 +23,18 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
     // Here is where you could fetch credentials from keychain or storage
     // and pre-fill the form fields.
     setAuthEmail("ignite@infinite.red")
-    // setAuthPassword("ign1teIsAwes0m3")
+    setAuthPassword("ign1teIsAwes0m3")
 
     // Return a "cleanup" function that React will run when the component unmounts
     return () => {
-      // setAuthPassword("")
+      setAuthPassword("")
       setAuthEmail("")
     }
   }, [])
 
   const error = isSubmitted ? validationError : ""
 
-  const signup = () => {
+  function login() {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
 
@@ -64,19 +43,11 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
     // Make a request to your server to get an authentication token.
     // If successful, reset the fields and set the token.
     setIsSubmitted(false)
-    setRegPassword("")
+    setAuthPassword("")
     setAuthEmail("")
 
     // We'll mock this with a fake token.
     setAuthToken(String(Date.now()))
-  }
-
-  const removeSignupWindow = () => {
-    // navigation.navigate("Welcome");
-  }
-
-  const goToSignIn = () => {
-    navigation.navigate("Login")
   }
 
   const PasswordRightAccessory = useMemo(
@@ -84,95 +55,75 @@ export const RegisterScreen: FC<RegisterScreenProps> = observer(function Registe
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
         return (
           <Icon
-            icon={isRegPasswordHidden ? "view" : "hidden"}
+            icon={isAuthPasswordHidden ? "view" : "hidden"}
             color={colors.palette.neutral800}
             containerStyle={props.style}
             size={20}
-            onPress={() => setIsRegPasswordHidden(!isRegPasswordHidden)}
+            onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
           />
         )
       },
-    [isRegPasswordHidden],
+    [isAuthPasswordHidden],
   )
 
   return (
     <Screen
       preset="auto"
       contentContainerStyle={$screenContentContainer}
-      backgroundColor={colors.palette.appColor}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Image
-        source={require('../../assets/images/logo_white.png')}
-        style={$logo}
+      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
+      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
+      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+
+      <TextField
+        value={authEmail}
+        onChangeText={setAuthEmail}
+        containerStyle={$textField}
+        autoCapitalize="none"
+        autoComplete="email"
+        autoCorrect={false}
+        keyboardType="email-address"
+        labelTx="loginScreen.emailFieldLabel"
+        placeholderTx="loginScreen.emailFieldPlaceholder"
+        helper={error}
+        status={error ? "error" : undefined}
+        onSubmitEditing={() => authPasswordInput.current?.focus()}
       />
-      <FontIcon 
-        name="remove"
-        size={26}
-        color="white"
-        style={$removeIcon}
-        onPress={removeSignupWindow}
+
+      {/* <TextField
+        ref={authPasswordInput}
+        value={authPassword}
+        onChangeText={setAuthPassword}
+        containerStyle={$textField}
+        autoCapitalize="none"
+        autoComplete="password"
+        autoCorrect={false}
+        secureTextEntry={isAuthPasswordHidden}
+        labelTx="loginScreen.passwordFieldLabel"
+        placeholderTx="loginScreen.passwordFieldPlaceholder"
+        onSubmitEditing={login}
+        RightAccessory={PasswordRightAccessory}
+      /> */}
+
+      <Button
+        testID="login-button"
+        tx="loginScreen.tapToSignIn"
+        style={$tapButton}
+        preset="reversed"
+        onPress={login}
       />
-      <View style={$content}>
-        <Text testID="signup-heading" tx="signupScreen.signUp" preset="heading" style={$signUp} />
-
-        <TextField
-          ref={refPasswordInput}
-          value={authEmail}
-          onChangeText={setAuthEmail}
-          containerStyle={$textField}
-          autoCapitalize="none"
-          autoComplete="email"
-          autoCorrect={false}
-          keyboardType="email-address"
-          placeholderTx="signupScreen.emailFieldPlaceholder"
-          helper={error}
-          status={error ? "error" : undefined}
-          onSubmitEditing={() => refPasswordInput.current?.focus()}
-        />
-
-        <TextField
-          ref={refPasswordInput}
-          value={regPassword}
-          onChangeText={setRegPassword}
-          containerStyle={$textField}
-          autoCapitalize="none"
-          autoComplete="password"
-          autoCorrect={false}
-          secureTextEntry={isRegPasswordHidden}
-          placeholderTx="signupScreen.passwordFieldPlaceholder"
-          onSubmitEditing={signup}
-          RightAccessory={PasswordRightAccessory}
-        />
-
-        <Button
-          testID="signup-button"
-          tx="signupScreen.tapToSignUp"
-          style={$tapButton}
-          preset="reversed"
-          onPress={signup}
-        />
-
-        <Text style={$addionText}>
-          Already have an account? <Text style={$spanInAddText} onPress={goToSignIn}>Sign In</Text>
-        </Text>
-      </View>
     </Screen>
   )
 })
 
 const $screenContentContainer: ViewStyle = {
-  backgroundColor: colors.appColor,
-  height: '100%',
+  paddingVertical: spacing.xxl,
+  paddingHorizontal: spacing.lg,
 }
 
-const $signUp: TextStyle = {
-  marginBottom: spacing.xl,
-  marginTop: spacing.xl,
-  color: '#1D1E1D',
-  textAlign: 'center',
-  fontSize: 25,
-  fontWeight: 'bold',
+const $signIn: TextStyle = {
+  marginBottom: spacing.sm,
 }
 
 const $enterDetails: TextStyle = {
@@ -190,41 +141,6 @@ const $textField: ViewStyle = {
 
 const $tapButton: ViewStyle = {
   marginTop: spacing.xs,
-  paddingVertical: 10,
-  backgroundColor: '#1D1E1D',
-  borderRadius: 18,
-  minHeight: 30
 }
 
-const $content: ViewStyle = {
-  paddingHorizontal: spacing.lg,
-  position: 'absolute',
-  height: '75%',
-  width: '100%',
-  backgroundColor: 'white',
-  bottom: 0,
-  borderTopLeftRadius: 20,
-  borderTopRightRadius: 20,
-}
-
-const $logo: ViewStyle = {
-  resizeMode: 'contain',
-  width: '100%',
-  marginTop: -15,
-}
-
-const $removeIcon: ViewStyle = {
-  position: 'absolute',
-  top: 28,
-  right: 20,
-}
-
-const $addionText: ViewStyle = {
-  paddingVertical: spacing.lg,
-}
-
-const $spanInAddText: ViewStyle = {
-  color: '#85D094',
-  fontWeight: 'bold',
-}
 // @demo remove-file
