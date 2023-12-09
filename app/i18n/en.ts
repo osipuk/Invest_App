@@ -30,27 +30,15 @@ const en = {
   errors: {
     invalidEmail: "Invalid email address.",
   },
-  signupScreen: {
-    signUp: "SIGN UP",
-    enterDetails:
-      "Enter your details below to unlock top secret info to signup for this investment app.",
-    emailFieldLabel: "Email",
-    passwordFieldLabel: "Password",
-    emailFieldPlaceholder: "Enter your email address",
-    passwordFieldPlaceholder: "Enter your password",
-    tapToSignUp: "CREATE ACCOUNT",
-    hint: "Hint: you can use any email address and your favorite password :)",
-  },
   loginScreen: {
-    signIn: "WELCOME BACK",
+    signIn: "Sign In",
     enterDetails:
       "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
     emailFieldLabel: "Email",
     passwordFieldLabel: "Password",
     emailFieldPlaceholder: "Enter your email address",
     passwordFieldPlaceholder: "Super secret password here",
-    tapToSignIn: "SIGN IN",
-    rememberMe: "Remember Me",
+    tapToSignIn: "Tap to sign in!",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
   demoNavigator: {
@@ -58,7 +46,6 @@ const en = {
     debugTab: "Debug",
     communityTab: "Community",
     podcastListTab: "Podcast",
-    signupTab: "SignUp"
   },
   demoCommunityScreen: {
     title: "Connect with the community",

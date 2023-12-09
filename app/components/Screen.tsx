@@ -220,6 +220,7 @@ export function Screen(props: ScreenProps) {
 }
 
 const $containerStyle: ViewStyle = {
+  flex: 1,
   height: "100%",
   width: "100%",
 }
