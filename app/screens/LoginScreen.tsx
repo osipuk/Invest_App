@@ -1,7 +1,17 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
+import { Image, View, TextInput, TextStyle, ViewStyle } from "react-native"
+import {
+  Toggle,
+  Button, 
+  Icon, 
+  Screen, 
+  Text, 
+  TextField, 
+  TextFieldAccessoryProps 
+} from "../components"
+
+import FontIcon from 'react-native-vector-icons/FontAwesome'
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
@@ -9,12 +19,18 @@ import { colors, spacing } from "../theme"
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
-  const authPasswordInput = useRef<TextInput>()
   const { navigation } = _props
+
+  const refAuthPasswordInput = useRef<TextInput>()
+
   const [authPassword, setAuthPassword] = useState("")
   const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
+
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isMemoPassword, setIsMemoPassword] = useState(0)
+
   const [attemptsCount, setAttemptsCount] = useState(0)
+
   const {
     authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
   } = useStores()
@@ -34,7 +50,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   const error = isSubmitted ? validationError : ""
 
-  function login() {
+  const login = () => {
     setIsSubmitted(true)
     setAttemptsCount(attemptsCount + 1)
 
@@ -50,10 +66,19 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     setAuthToken(String(Date.now()))
   }
 
-  function goSignUp() {
+  const goSignUp = () => {
     navigation.navigate("Register");
  
   }
+
+  const removeSignInWindow = () => {
+
+  }
+
+  const onChangeSetMemoPassword = (value) => {
+
+  }
+
   const PasswordRightAccessory = useMemo(
     () =>
       function PasswordRightAccessory(props: TextFieldAccessoryProps) {
@@ -74,67 +99,93 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     <Screen
       preset="auto"
       contentContainerStyle={$screenContentContainer}
+      backgroundColor={colors.palette.appColor}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
-
-      <TextField
-        value={authEmail}
-        onChangeText={setAuthEmail}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="email"
-        autoCorrect={false}
-        keyboardType="email-address"
-        labelTx="loginScreen.emailFieldLabel"
-        placeholderTx="loginScreen.emailFieldPlaceholder"
-        helper={error}
-        status={error ? "error" : undefined}
-        onSubmitEditing={() => authPasswordInput.current?.focus()}
+      <Image
+        source={require('../../assets/images/logo_white.png')}
+        style={$logo}
+      />
+      <FontIcon 
+        name="remove"
+        size={26}
+        color="white"
+        style={$removeIcon}
+        onPress={removeSignInWindow}
       />
 
-      <TextField
-        ref={authPasswordInput}
-        value={authPassword}
-        onChangeText={setAuthPassword}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="password"
-        autoCorrect={false}
-        secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen.passwordFieldLabel"
-        placeholderTx="loginScreen.passwordFieldPlaceholder"
-        onSubmitEditing={login}
-        RightAccessory={PasswordRightAccessory}
-      />
+      <View style={$content}>
+        <Text testID="signup-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
 
-      <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="reversed"
-        onPress={login}
-      />
-       <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="reversed"
-        onPress={goSignUp}
-      />
+        <TextField
+          ref={refAuthPasswordInput}
+          value={authEmail}
+          onChangeText={setAuthEmail}
+          containerStyle={$textField}
+          autoCapitalize="none"
+          autoComplete="email"
+          autoCorrect={false}
+          keyboardType="email-address"
+          placeholderTx="signupScreen.emailFieldPlaceholder"
+          helper={error}
+          status={error ? "error" : undefined}
+          onSubmitEditing={() => refAuthPasswordInput.current?.focus()}
+        />
+
+        <TextField
+          ref={refAuthPasswordInput}
+          value={authPassword}
+          onChangeText={setAuthPassword}
+          containerStyle={$textField}
+          autoCapitalize="none"
+          autoComplete="password"
+          autoCorrect={false}
+          secureTextEntry={isAuthPasswordHidden}
+          placeholderTx="signupScreen.passwordFieldPlaceholder"
+          onSubmitEditing={login}
+          RightAccessory={PasswordRightAccessory}
+        />
+
+        <Toggle
+          variant="checkbox"
+          value={isMemoPassword}
+          onValueChange={onChangeSetMemoPassword}
+          labelTx="loginScreen.rememberMe"
+          labelStyle={{ color: "#1D1E1D" }}
+          containerStyle={{ backgroundColor: "#fff" }}
+        />
+
+        <Button
+          testID="signup-button"
+          tx="loginScreen.tapToSignIn"
+          style={$tapButton}
+          preset="reversed"
+          onPress={login}
+        />
+
+        <Text style={$addionText}>
+          Forgot your password? <Text style={$spanInAddText} onPress={goSignUp}>Reset Password</Text>
+        </Text>
+        <Text style={$addionText}>
+          Not on Hamas4u? <Text style={$spanInAddText} onPress={goSignUp}>Create Account</Text>
+        </Text>
+      </View>
     </Screen>
   )
 })
 
 const $screenContentContainer: ViewStyle = {
-  paddingVertical: spacing.xxl,
-  paddingHorizontal: spacing.lg,
+  backgroundColor: colors.appColor,
+  height: '100%',
 }
 
 const $signIn: TextStyle = {
-  marginBottom: spacing.sm,
+  marginBottom: spacing.xl,
+  marginTop: spacing.xl,
+  color: '#1D1E1D',
+  textAlign: 'center',
+  fontSize: 25,
+  fontWeight: 'bold',
 }
 
 const $enterDetails: TextStyle = {
@@ -151,7 +202,42 @@ const $textField: ViewStyle = {
 }
 
 const $tapButton: ViewStyle = {
-  marginTop: spacing.xs,
+  marginTop: spacing.lg,
+  marginBottom: spacing.xl,
+  backgroundColor: '#1D1E1D',
+  borderRadius: 30,
+  minHeight: 30
 }
 
+const $content: ViewStyle = {
+  paddingHorizontal: spacing.lg,
+  position: 'absolute',
+  height: '75%',
+  width: '100%',
+  backgroundColor: 'white',
+  bottom: 0,
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+}
+
+const $logo: ViewStyle = {
+  resizeMode: 'contain',
+  width: '100%',
+  marginTop: -15,
+}
+
+const $removeIcon: ViewStyle = {
+  position: 'absolute',
+  top: 28,
+  right: 20,
+}
+
+const $addionText: ViewStyle = {
+  paddingBottom: spacing.sm,
+}
+
+const $spanInAddText: ViewStyle = {
+  color: '#85D094',
+  fontWeight: 'bold',
+}
 // @demo remove-file
