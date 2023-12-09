@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Pressable, PressableProps, ViewStyle } from "react-native"
+import { Pressable, PressableProps, ViewStyle, View ,Text,Image} from "react-native"
 import Animated, {
   interpolate,
   interpolateColor,
@@ -71,17 +71,26 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
   })
 
   useEffect(() => {
-    progress.value = withSpring(open ? 1 : 0)
+    progress.value = withSpring(open ? 1 : 0) 
   }, [open, progress])
 
   return (
-    <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
-      <Animated.View style={[$topBar, animatedTopBarStyles]} />
+    <View style={{ flexDirection: "row"}}>
+      <View style={{ flex: 0.1 }}>
+        <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
+          <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
-      <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
+          <Animated.View style={[$middleBar, animatedMiddleBarStyles]} />
+          <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
+        </AnimatedPressable>
+      </View>
+      <View style={{flex:0.8, paddingTop:1,paddingLeft:10}}>
+          {/* <Text>Title</Text> */}
+          <Image source={require("../../../assets/images/welcome_logo.png")} style={{width:160,height:50}} resizeMode="stretch"></Image>
+      </View>
 
-      <Animated.View style={[$bottomBar, animatedBottomBarStyles]} />
-    </AnimatedPressable>
+    </View>
+
   )
 }
 
@@ -106,5 +115,6 @@ const $middleBar: ViewStyle = {
 const $bottomBar: ViewStyle = {
   height: barHeight,
 }
+
 
 // @demo remove-file

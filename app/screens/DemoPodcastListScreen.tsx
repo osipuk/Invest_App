@@ -13,6 +13,7 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Dimensions
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -29,6 +30,7 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import Carousel from 'react-native-reanimated-carousel';
 
 const ICON_SIZE = 14
 
@@ -44,6 +46,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     const [refreshing, setRefreshing] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
 
+    // test section
+    var DATA=[{id:'0',title:"item1"},{id:'2',title:"item2"},{id:'3',title:"item3"},{id:'4',title:"item4"}]
     // initially, kick off a background refresh without the refreshing UI
     useEffect(() => {
       ;(async function load() {
@@ -60,17 +64,35 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
       setRefreshing(false)
     }
 
+    type ItemProps = typeof DATA[0];
+    const Item = ({ title,  id }: ItemProps) => (
+      <View key={id} style={[$itemSt]}>        
+        <Text style={{fontSize:18}}>{title}</Text>
+      </View>
+    );
+    const renderItem = ({ item }: { item: ItemProps }) => (
+      <Item id={item.id} title={item.title} />
+    );
+    const width = Dimensions.get('window').width;
     return (
       <Screen
         preset="fixed"
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
+          
+        {/* <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        horizontal
+      /> */}
         <FlatList<Episode>
           data={episodeStore.episodesForList}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           contentContainerStyle={$flatListContentContainer}
           refreshing={refreshing}
+          // horizontal
           onRefresh={manualRefresh}
           ListEmptyComponent={
             isLoading ? (
@@ -371,5 +393,13 @@ const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
 }
 // #endregion
-
+const $itemSt:ViewStyle={
+  backgroundColor: "#2dbded",
+    paddingHorizontal: 50,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    // height: 200,
+    width:370,
+   flex:1
+}
 // @demo remove-file

@@ -266,6 +266,8 @@ const $wrapper: ViewStyle = {
 
 const $container: ViewStyle = {
   width: "100%",
+  borderBottomWidth:1,
+  borderBottomColor:'#e0e0e0'
 }
 
 const $title: TextStyle = {

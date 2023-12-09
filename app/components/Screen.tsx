@@ -141,6 +141,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
   const { style, contentContainerStyle, children } = props
   return (
     <View style={[$outerStyle, style]}>
+   
       <View style={[$innerStyle, contentContainerStyle]}>{children}</View>
     </View>
   )
@@ -204,7 +205,7 @@ export function Screen(props: ScreenProps) {
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
-        behavior={isIos ? "padding" : undefined}
+        behavior={isIos ? "padding" : "padding"}
         keyboardVerticalOffset={keyboardOffset}
         {...KeyboardAvoidingViewProps}
         style={[$keyboardAvoidingViewStyle, KeyboardAvoidingViewProps?.style]}

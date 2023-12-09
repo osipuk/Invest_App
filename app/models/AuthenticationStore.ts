@@ -4,7 +4,7 @@ export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
     authToken: types.maybe(types.string),
-    authEmail: "",
+    authEmail: "",   
   })
   .views((store) => ({
     get isAuthenticated() {
@@ -16,7 +16,7 @@ export const AuthenticationStoreModel = types
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(store.authEmail))
         return "must be a valid email address"
       return ""
-    },
+    }, 
   }))
   .actions((store) => ({
     setAuthToken(value?: string) {
@@ -24,10 +24,11 @@ export const AuthenticationStoreModel = types
     },
     setAuthEmail(value: string) {
       store.authEmail = value.replace(/ /g, "")
-    },
+    },   
     logout() {
       store.authToken = undefined
       store.authEmail = ""
+    
     },
   }))
 

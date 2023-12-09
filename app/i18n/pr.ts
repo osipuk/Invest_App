@@ -35,13 +35,19 @@ const fr: Translations = {
   },
   loginScreen: {
     signIn: "Se connecter",
+    signUp:'Create account',
+    signUp1:'SIGN UP',
+    cancel:'CANCEL',
     enterDetails:
       "Entrez vos informations ci-dessous pour débloquer des informations top secrètes. Vous ne devinerez jamais ce que nous avons en attente. Ou peut-être que vous le ferez ; ce n'est pas de la science spatiale ici.",
     emailFieldLabel: "E-mail",
     passwordFieldLabel: "Mot de passe",
+    confirmpasswordFieldPlaceholder: "Confirm password here",
+    confirmpasswordLabel: "Confirm Password",
     emailFieldPlaceholder: "Entrez votre adresse e-mail",
     passwordFieldPlaceholder: "Mot de passe super secret ici",
     tapToSignIn: "Appuyez pour vous connecter !",
+    forgotPassword:"Forgot password?",
     hint: "Astuce : vous pouvez utiliser n'importe quelle adresse e-mail et votre mot de passe préféré :)",
   },
   demoNavigator: {
@@ -49,6 +55,10 @@ const fr: Translations = {
     debugTab: "Débogage",
     communityTab: "Communauté",
     podcastListTab: "Podcasts",
+    offering:"Offerings",
+    portfolio:"Portfolio",
+    myaccount:"My Account",
+    logout:"Log Out"
   },
   demoCommunityScreen: {
     title: "Connectez-vous avec la communauté",
@@ -123,6 +133,32 @@ const fr: Translations = {
         "Aucun favori n'a été ajouté pour le moment. Appuyez sur le cœur d'un épisode pour l'ajouter à vos favoris !",
     },
   },
+  BuyInvest: {
+    buyBtn: "BUY(QUOTE)",
+  },
+  Account:{
+    firstname:"First Name",
+    lastname:"Last Name",
+    phoneNumber:"Phone Number",
+    birthDay:"Date of Birth",
+    address:"Address",
+    city:"City",
+    state:"State/Region",
+    zipCode:"Zip/Postal Code",
+    country:"Country",
+    holder_firstname:"Enter your first name",
+    holder_lastname:"Enter your last name",
+    holder_phone:"Enter your phone number",
+    holder_address:"Enter your address",
+    holder_birthday:"Enter your birthday",
+    holder_city:"Enter your city",
+    holder_state:"Enter your state",
+    holder_zipcode:"Enter your zipcode",
+    holder_country:"Enter your country",
+  },
+  Button:{
+    save:"SAVE"
+  }
   // @demo remove-block-end
 }
 

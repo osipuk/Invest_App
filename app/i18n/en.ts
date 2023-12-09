@@ -31,13 +31,19 @@ const en = {
     invalidEmail: "Invalid email address.",
   },
   loginScreen: {
-    signIn: "Sign In",
+    signIn: "Log In",
+    signUp:'Create account',
+    signUp1:'SIGN UP',
+    cancel:'CANCEL',
     enterDetails:
       "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
     emailFieldLabel: "Email",
     passwordFieldLabel: "Password",
+    confirmpasswordLabel: "Confirm Password",
     emailFieldPlaceholder: "Enter your email address",
     passwordFieldPlaceholder: "Super secret password here",
+    confirmpasswordFieldPlaceholder: "Confirm password here",
+    forgotPassword:"Forgot password?",
     tapToSignIn: "Tap to sign in!",
     hint: "Hint: you can use any email address and your favorite password :)",
   },
@@ -46,6 +52,10 @@ const en = {
     debugTab: "Debug",
     communityTab: "Community",
     podcastListTab: "Podcast",
+    offering: "Offerings",
+    portfolio: "Portfolio",
+    myaccount: "My Account",
+    logout: "Log Out"
   },
   demoCommunityScreen: {
     title: "Connect with the community",
@@ -120,6 +130,33 @@ const en = {
     },
   },
   // @demo remove-block-end
+  BuyInvest: {
+    buyBtn: "BUY(QUOTE)",
+  },
+  Account:{
+    firstname:"First Name",
+    lastname:"Last Name",
+    phoneNumber:"Phone Number",
+    birthDay:"Date of Birth",
+    address:"Address",
+    city:"City",
+    state:"State/Region",
+    zipCode:"Zip/Postal Code",
+    country:"Country",
+    holder_firstname:"Enter your first name",
+    holder_lastname:"Enter your last name",
+    holder_phone:"Enter your phone number",
+    holder_address:"Enter your address",
+    holder_birthday:"Enter your birthday",
+    holder_city:"Enter your city",
+    holder_state:"Enter your state",
+    holder_zipcode:"Enter your zipcode",
+    holder_country:"Enter your country",
+    
+  },
+  Button:{
+    save:"SAVE"
+  }
 }
 
 export default en

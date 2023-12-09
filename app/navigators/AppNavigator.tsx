@@ -35,9 +35,19 @@ import { colors } from "app/theme"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Welcome: undefined
-  Login: undefined // @demo remove-current-line
-  Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
+  Welcome: undefined,
+  Register: undefined, //ooo
+  BuyInvest:undefined,//ooo
+  Order:undefined, //000
+  Login: undefined ,// @demo remove-current-line
+  Account:undefined,
+  Detail:undefined,
+  Document:undefined,
+  Videos:undefined,
+  MyAccount:undefined,
+  Photos:undefined,
+  Demo: undefined,
+  // NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -62,23 +72,55 @@ const AppStack = observer(function AppStack() {
     authenticationStore: { isAuthenticated },
   } = useStores()
 
+
+  // const headerLeftComponentMenu = () => {
+  //   return (
+  //     <TouchableOpacity
+  //       onPress={() => props.navigation.toggleDrawer()}
+  //       style={{
+  //         paddingHorizontal: 16,
+  //         paddingVertical: 12,
+  //       }}
+  //     >
+  //       <Image
+  //         source={require('../../../assets/images/drawer/menu.png')}
+  //         resizeMode="contain"
+  //         style={{
+  //           height: 20,
+  //         }}
+  //       />
+  //     </TouchableOpacity>    
+  //   )
+  // }
+
+
   // @demo remove-block-end
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
+      initialRouteName={isAuthenticated ? "Demo" : "Login"} // @demo remove-current-line
     >
       {/* @demo remove-block-start */}
       {isAuthenticated ? (
         <>
           {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          {/* <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} /> */}
+          <Stack.Screen name="Demo" component={DemoNavigator}/>
+          <Stack.Screen name="BuyInvest" component={Screens.BuyInvestScreen} />
+          <Stack.Screen name="Detail" component={Screens.DetailScreen} />
+          <Stack.Screen name="Document" component={Screens.DocumentScreen} />
+          <Stack.Screen name="Photos" component={Screens.PhotoScreen} />
+          <Stack.Screen name="Videos" component={Screens.VideoScreen} />
+          <Stack.Screen name="Order" component={Screens.OrderScreen} />
+          <Stack.Screen name="Account" component={Screens.AccountScreen} />
           {/* @demo remove-block-start */}
-          <Stack.Screen name="Demo" component={DemoNavigator} />
+         
         </>
       ) : (
         <>
+        
           <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name="Register" component={Screens.RegisterScreen} />
         </>
       )}
       {/* @demo remove-block-end */}

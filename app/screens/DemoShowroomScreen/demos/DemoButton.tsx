@@ -12,7 +12,7 @@ const $customButtonStyle: ViewStyle = { backgroundColor: colors.error, height: 1
 const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
 const $customButtonTextStyle: TextStyle = {
   color: colors.error,
-  fontFamily: typography.primary.bold,
+  // fontFamily: typography.primary.bold,
   textDecorationLine: "underline",
   textDecorationColor: colors.error,
 }
@@ -66,7 +66,8 @@ export const DemoButton: Demo = {
       <DemoDivider />
 
       <Button
-        preset="filled"
+        preset="default"
+        style={{width:50,height:50}}
         LeftAccessory={(props) => (
           <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
         )}
